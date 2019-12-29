@@ -1,6 +1,6 @@
 #!/bin/sh
 
-for typ in Int Int64 String Intptr Uint Uint64 Uintptr; do
+for typ in Int Int64 String Uint Uint64 Uintptr; do
 	typlc=`echo "$typ" | tr A-Z a-z`
 
 	echo "Generating $typlc.go"
