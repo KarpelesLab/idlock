@@ -2,22 +2,22 @@ package idlock
 
 import "sync"
 
-type Int64Lock struct {
-	mp map[int64]bool
+type UintLock struct {
+	mp map[uint]bool
 	lk sync.Mutex
 	cd *sync.Cond
 }
 
-func NewInt64() *Int64Lock {
-	lk := &Int64Lock{
-		mp: make(map[int64]bool),
+func NewUint() *UintLock {
+	lk := &UintLock{
+		mp: make(map[uint]bool),
 	}
 	lk.cd = sync.NewCond(&lk.lk)
 
 	return lk
 }
 
-func (lk *Int64Lock) Lock(i ...int64) {
+func (lk *UintLock) Lock(i ...uint) {
 	var f bool
 
 	if len(i) == 0 {
@@ -32,7 +32,7 @@ func (lk *Int64Lock) Lock(i ...int64) {
 			}
 		}
 		if !f {
-			// mark int64s as locked
+			// mark uints as locked
 			for _, n := range i {
 				lk.mp[n] = true
 			}
@@ -45,7 +45,7 @@ func (lk *Int64Lock) Lock(i ...int64) {
 	}
 }
 
-func (lk *Int64Lock) Unlock(i ...int64) {
+func (lk *UintLock) Unlock(i ...uint) {
 	if len(i) == 0 {
 		return
 	}

@@ -32,7 +32,7 @@ func (lk *StringLock) Lock(i ...string) {
 			}
 		}
 		if !f {
-			// mark ints as locked
+			// mark strings as locked
 			for _, n := range i {
 				lk.mp[n] = true
 			}
