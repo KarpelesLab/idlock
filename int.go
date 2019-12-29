@@ -17,14 +17,25 @@ func NewInt() *IntLock {
 	return lk
 }
 
-func (lk *IntLock) Lock(i int) {
+func (lk *IntLock) Lock(i ...int) {
 	var f bool
+
+	if len(i) == 0 {
+		return
+	}
 
 	lk.lk.Lock()
 	for {
-		if _, f = lk.mp[i]; !f {
-			// mark int as locked
-			lk.mp[i] = true
+		for _, n := range i {
+			if _, f = lk.mp[n]; f {
+				break
+			}
+		}
+		if !f {
+			// mark ints as locked
+			for _, n := range i {
+				lk.mp[n] = true
+			}
 			lk.lk.Unlock()
 			return
 		}
@@ -34,9 +45,17 @@ func (lk *IntLock) Lock(i int) {
 	}
 }
 
-func (lk *IntLock) Unlock(i int) {
+func (lk *IntLock) Unlock(i ...int) {
+	if len(i) == 0 {
+		return
+	}
+
 	lk.lk.Lock()
-	delete(lk.mp, i)
+
+	for _, n := range i {
+		delete(lk.mp, n)
+	}
+
 	lk.cd.Broadcast()
 	lk.lk.Unlock()
 }
