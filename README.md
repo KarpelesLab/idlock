@@ -1,3 +1,5 @@
+[![GoDoc](https://godoc.org/github.com/MagicalTux/idlock?status.svg)](https://godoc.org/github.com/MagicalTux/idlock)
+
 # IntLock, etc
 
 Very simple lock-by-id object for various purposes. Keep multiple locks under arbitrary ID values.
