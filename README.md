@@ -1,4 +1,4 @@
-[![GoDoc](https://godoc.org/github.com/MagicalTux/idlock?status.svg)](https://godoc.org/github.com/MagicalTux/idlock)
+[![GoDoc](https://godoc.org/github.com/KarpelesLab/idlock?status.svg)](https://godoc.org/github.com/KarpelesLab/idlock)
 
 # IntLock, etc
 
@@ -8,7 +8,7 @@ Example:
 
 ```Go
 import (
-	"github.com/MagicalTux/idlock"
+	"github.com/KarpelesLab/idlock"
 	"fmt"
 )
 
