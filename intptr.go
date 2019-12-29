@@ -8,6 +8,7 @@ type IntptrLock struct {
 	cd *sync.Cond
 }
 
+// NewIntptr will instanciate a new IntptrLock instance and return it.
 func NewIntptr() *IntptrLock {
 	lk := &IntptrLock{
 		mp: make(map[intptr]bool),
@@ -17,6 +18,8 @@ func NewIntptr() *IntptrLock {
 	return lk
 }
 
+// Lock will lock any number of intptrs and return on success. The method
+// will not return until all locks can be acquired at the same time.
 func (lk *IntptrLock) Lock(i ...intptr) {
 	var f bool
 
@@ -45,6 +48,8 @@ func (lk *IntptrLock) Lock(i ...intptr) {
 	}
 }
 
+// Unlock releases all the initially obtained locks. Always release acquired
+// locks and never release a lock you didn't acquire.
 func (lk *IntptrLock) Unlock(i ...intptr) {
 	if len(i) == 0 {
 		return

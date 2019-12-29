@@ -8,6 +8,7 @@ type Uint64Lock struct {
 	cd *sync.Cond
 }
 
+// NewUint64 will instanciate a new Uint64Lock instance and return it.
 func NewUint64() *Uint64Lock {
 	lk := &Uint64Lock{
 		mp: make(map[uint64]bool),
@@ -17,6 +18,8 @@ func NewUint64() *Uint64Lock {
 	return lk
 }
 
+// Lock will lock any number of uint64s and return on success. The method
+// will not return until all locks can be acquired at the same time.
 func (lk *Uint64Lock) Lock(i ...uint64) {
 	var f bool
 
@@ -45,6 +48,8 @@ func (lk *Uint64Lock) Lock(i ...uint64) {
 	}
 }
 
+// Unlock releases all the initially obtained locks. Always release acquired
+// locks and never release a lock you didn't acquire.
 func (lk *Uint64Lock) Unlock(i ...uint64) {
 	if len(i) == 0 {
 		return

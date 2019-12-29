@@ -8,6 +8,7 @@ type StringLock struct {
 	cd *sync.Cond
 }
 
+// NewString will instanciate a new StringLock instance and return it.
 func NewString() *StringLock {
 	lk := &StringLock{
 		mp: make(map[string]bool),
@@ -17,6 +18,8 @@ func NewString() *StringLock {
 	return lk
 }
 
+// Lock will lock any number of strings and return on success. The method
+// will not return until all locks can be acquired at the same time.
 func (lk *StringLock) Lock(i ...string) {
 	var f bool
 
@@ -45,6 +48,8 @@ func (lk *StringLock) Lock(i ...string) {
 	}
 }
 
+// Unlock releases all the initially obtained locks. Always release acquired
+// locks and never release a lock you didn't acquire.
 func (lk *StringLock) Unlock(i ...string) {
 	if len(i) == 0 {
 		return

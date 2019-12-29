@@ -8,6 +8,7 @@ type UintLock struct {
 	cd *sync.Cond
 }
 
+// NewUint will instanciate a new UintLock instance and return it.
 func NewUint() *UintLock {
 	lk := &UintLock{
 		mp: make(map[uint]bool),
@@ -17,6 +18,8 @@ func NewUint() *UintLock {
 	return lk
 }
 
+// Lock will lock any number of uints and return on success. The method
+// will not return until all locks can be acquired at the same time.
 func (lk *UintLock) Lock(i ...uint) {
 	var f bool
 
@@ -45,6 +48,8 @@ func (lk *UintLock) Lock(i ...uint) {
 	}
 }
 
+// Unlock releases all the initially obtained locks. Always release acquired
+// locks and never release a lock you didn't acquire.
 func (lk *UintLock) Unlock(i ...uint) {
 	if len(i) == 0 {
 		return

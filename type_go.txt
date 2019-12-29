@@ -8,6 +8,7 @@ type TypeNameLock struct {
 	cd *sync.Cond
 }
 
+// NewTypeName will instanciate a new TypeNameLock instance and return it.
 func NewTypeName() *TypeNameLock {
 	lk := &TypeNameLock{
 		mp: make(map[typename]bool),
@@ -17,6 +18,8 @@ func NewTypeName() *TypeNameLock {
 	return lk
 }
 
+// Lock will lock any number of typenames and return on success. The method
+// will not return until all locks can be acquired at the same time.
 func (lk *TypeNameLock) Lock(i ...typename) {
 	var f bool
 
@@ -45,6 +48,8 @@ func (lk *TypeNameLock) Lock(i ...typename) {
 	}
 }
 
+// Unlock releases all the initially obtained locks. Always release acquired
+// locks and never release a lock you didn't acquire.
 func (lk *TypeNameLock) Unlock(i ...typename) {
 	if len(i) == 0 {
 		return
